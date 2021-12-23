@@ -177,6 +177,7 @@ body {
 	</tr></table>
 
 <br><br>
+
 <table id="table">
 	<tr>
 	<td><img src="layout/Michelle.jpg" align="left"/></td>
@@ -222,7 +223,6 @@ body {
 		</td>
 		<td><h6>Xin Zhou</h6>
 		<p>Start Time: 2021</p><br><br>
-			<br>
 			<div class="divTable minimalistBlack">
 			<div class="divTableBody">
 			<div class="divTableRow">
