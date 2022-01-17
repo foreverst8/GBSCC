@@ -145,10 +145,10 @@ body {
 			</div>
 		</td>
 
-		<td><img src="layout/esther.jpg" align="left"/></td>
+		<td><img src="layout/Michelle.jpg" align="left"/></td>
 
-		<td><h6>Esther Lo</h6>
-			<p>Start Time: 2019</p><br><br>
+		<td><h6>Michelle Cenon</h6>
+			<p>Start Time: 2021</p><br><br>
 			<div class="divTable minimalistBlack">
 			<div class="divTableBody">
 			<div class="divTableRow">
@@ -157,7 +157,7 @@ body {
 			</div>
 			<div class="divTableRow">
 				<div class="divTableCell">1] Office</div>
-				<div class="divTableCell">N22 - 3009</div>
+				<div class="divTableCell">E12 - 3019</div>
 			</div>
 			<div class="divTableRow">
 				<div class="divTableCell">2] Lab</div>
@@ -169,7 +169,7 @@ body {
 			</div>
 			<div class="divTableRow">
 				<div class="divTableCell">Email</div>
-				<div class="divTableCell"><a href="mailto:estherlo@um.edu.mo">estherlo@um.edu.mo</a></div>
+				<div class="divTableCell"><a href="mailto:michellecenon@um.edu.mo">michellecenon@um.edu.mo</a></div>
 			</div>
 			</div>
 			</div>
@@ -178,41 +178,6 @@ body {
 
 <br><br>
 
-<table id="table">
-	<tr>
-	<td><img src="layout/Michelle.jpg" align="left"/></td>
-
-	<td><h6>Michelle Cenon</h6>
-		<p>Start Time: 2021</p><br><br>
-		<div class="divTable minimalistBlack">
-		<div class="divTableBody">
-		<div class="divTableRow">
-			<div class="divTableCell">Address</div>
-			<div class="divTableCell">&nbsp;</div>
-		</div>
-		<div class="divTableRow">
-			<div class="divTableCell">1] Office</div>
-			<div class="divTableCell">E12 - 3019</div>
-		</div>
-		<div class="divTableRow">
-			<div class="divTableCell">2] Lab</div>
-			<div class="divTableCell">N22 - 3009</div>
-		</div>
-		<div class="divTableRow">
-			<div class="divTableCell">Phone</div>
-			<div class="divTableCell">8822 4219</div>
-		</div>
-		<div class="divTableRow">
-			<div class="divTableCell">Email</div>
-			<div class="divTableCell"><a href="mailto:michellecenon@um.edu.mo">michellecenon@um.edu.mo</a></div>
-		</div>
-		</div>
-		</div>
-	</td>
-	</tr></table>
-
-
-<br>
 <hr>
 <br>
 <h6>BIOINFORMATICS TEAM</h6>
@@ -493,18 +458,33 @@ body {
 <br>
 <h6>ALUMNI</h6>
 <br>
-<table id="table">
+<table id="wet_lab">
 	<tr>
 		<td><img src="layout/victor.jpeg" align="left"/></td>
 		<td>
 			<h6>Victor Lam</h6>
-			<p>Laboratory Personnel<p>
-			<br><p>2018 - 2019<p>
+			<p>Laboratory Personnel<p><br>
+			<p>2018 - 2019<p>
 			<div class="divTable minimalistBlack">
 			<div class="divTableBody">
 			</div>
 			</div>
 		</td>
+
+		<td><img src="layout/esther.jpg" align="left"/></td>
+		<td>
+			<h6>Esther Lo</h6>
+			<p>Laboratory Personnel</p><br>
+			<p>2019 - 2022</p>
+			<div class="divTable minimalistBlack">
+			<div class="divTableBody">
+			</div>
+			</div>
+		</td>
+	</tr>
+</table>
+<table id="dry_lab">
+	<tr>
 		<td><img src="layout/niranjan.png" align="left"/></td>
 		<td>
 			<h6>Niranjan Shirgaonkar</h6>
@@ -515,11 +495,6 @@ body {
 			</div>
 			</div>
 		</td>
-	</tr>
-</table>
-<br><br>
-<table id="table">
-	<tr>
 		<td><img src="layout/Lakhan.png" align="left"/></td>
 		<td>
 			<h6>Lakhansing Pardeshi</h6>
@@ -530,6 +505,8 @@ body {
 			</div>
 			</div>
 		</td>
+	</tr>
+	<tr>
 		<td><img src="layout/Miao.jpg" align="left"/></td>
 		<td>
 			<h6>Zhengqiang Miao</h6>
@@ -540,11 +517,6 @@ body {
 			</div>
 			</div>
 		</td>
-	</tr>
-</table>
-<br><br>
-<table id="table">
-	<tr>
 		<td><img src="layout/Chirag.jpg" align="left"/></td>
 		<td>
 			<h6>Chirag Parsania</h6>
@@ -555,6 +527,8 @@ body {
 			</div>
 			</div>
 		</td>
+	</tr>
+	<tr>
 		<td><img src="layout/siyun.jpeg" align="left"/></td>
 		<td>
 			<h6>Siyun Liu</h6>
