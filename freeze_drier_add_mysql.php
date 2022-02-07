@@ -97,6 +97,7 @@ $end=$enddate."T".$endtime;
 $user=$result_user[0]['user_name'];
 $lab=$result_user[0]['lab'];
 $email=$result_user[0]['email'];
+
 $date=date('Y-m-d');
 
 $start1=date("m/d",strtotime($startdate));
@@ -138,6 +139,7 @@ if (!$res1 && !$res2) {
 	
     require('email_CC.php');
     $CC_arr=explode(',',$CC);
+    $CC_test=explode(',',$test_email);
 
     $Subject="Freeze-drier reservation: $user from $lab";
 
@@ -162,14 +164,14 @@ if (!$res1 && !$res2) {
         $mail->MsgHTML($main_mesg);
         $mail->AddAddress($email);
 
-        for($i=0;$i<count($CC_arr);$i++){
-            $mail->AddCC($CC_arr[$i]);
+        for($i=0;$i<count($CC_test);$i++){
+            $mail->AddCC($CC_test[$i]);
         }
 
         if(!$mail->Send()) {
             echo "<br><br>Booking email failed. Please contact Genomics Core support.<br><br>" . $mail->ErrorInfo;
         } else {
-            echo "<p><br><br>Booking email send to: $email<br><br>Booking email CC: $CC<br><br></p>";
+            echo "<p><br><br>Booking email send to: $email<br><br>Booking email CC: $test_email<br><br></p>";
         }
     }
 	
