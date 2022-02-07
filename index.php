@@ -47,6 +47,7 @@ session_start();?>
 	            <li><a href="cytation.php" target="myiframe">Cytation</a></li>
 	            <li><a href="cytof.php" target="myiframe">CyTOF</a></li>
 	            <li><a href="dropletpcr.php" target="myiframe">Droplet Digital PCR</a></li>
+				<li><a href="freeze_drier.php" target="myiframe">Freeze-drier</a></li>
 	            <li><a href="hyperion.php" target="myiframe">Hyperion</a></li>	            
 	            <li><a class="drop" href="ngs_choose_service.php" target="myiframe">Next Gen Sequencing</a>
 		              <ul>
