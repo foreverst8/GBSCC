@@ -164,14 +164,14 @@ if (!$res1 && !$res2) {
         $mail->MsgHTML($main_mesg);
         $mail->AddAddress($email);
 
-        for($i=0;$i<count($CC_test);$i++){
-            $mail->AddCC($CC_test[$i]);
+        for($i=0;$i<count($CC_arr);$i++){
+            $mail->AddCC($CC_arr[$i]);
         }
 
         if(!$mail->Send()) {
             echo "<br><br>Booking email failed. Please contact Genomics Core support.<br><br>" . $mail->ErrorInfo;
         } else {
-            echo "<p><br><br>Booking email send to: $email<br><br>Booking email CC: $test_email<br><br></p>";
+            echo "<p><br><br>Booking email send to: $email<br><br>Booking email CC: $CC<br><br></p>";
         }
     }
 	
