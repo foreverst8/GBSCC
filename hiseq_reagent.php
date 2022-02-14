@@ -1900,7 +1900,7 @@
 		if ($err_count < 1) {
 
 			$conn = db_connect();
-			$res = $conn->query("INSERT INTO genomics_core.reagent $name VALUES $value");
+			$res = $conn->query("INSERT INTO genomics_core.reagent ($name) VALUES (" . $value . ")");
 
 			/* TABLE A */
 			$res = $conn->query("UPDATE genomics_core.price_table SET stock = {$result_stock_array['DNA_High_sensitivty_chip']}-{$DNA_High_sensitivty_chip} WHERE name='DNA_High_sensitivty_chip'");
