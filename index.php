@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link href="layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
 	<style>
-		.footer p {
+		.container .footer {
 			text-align: center;
 			font: 12px "Microsoft YaHei";
 		}
@@ -93,18 +93,14 @@
 		</header>
 
 	</div>
+	<div class="container">
+		<iframe align="right" src="./home.php" name="myiframe" width="100%" height="100" marginwidth="0" margin="0" frameborder="0" scrolling="yes" onload="resizeIframe(this)" />
+		</iframe>
 
-	<!-- You will not be able to see this text. <iframe id="if1" width="100%" style="position:absolute; visibility:visible; height:100%;" src="../contactus.php"></iframe> -->
-
-	<iframe align="right" src="./home.php" name="myiframe" width="100%" height="100" marginwidth="0" margin="0" frameborder="0" scrolling="yes" onload="resizeIframe(this)" /></iframe>
-
-
-	<div class="footer">
-		<p> &copy; 2021 Faculty of Health Sciences (FHS). All rights reserved.<br>
+		<p class="footer"> &copy; 2021 Faculty of Health Sciences (FHS). All rights reserved.<br>
 			Tech Support: yb77630@connect.umac.mo
 		</p>
 	</div>
-
 </body>
 
 </html>
