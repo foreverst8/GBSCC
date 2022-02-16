@@ -142,10 +142,11 @@
         $CC_test = explode(',', $test_email);
 
         $Subject = "Freeze-drier reservation: $user from $lab";
+        $chamber = strtoupper($chamber);
 
         if ($email != "") {
 
-            $main_mesg = "Dear Core User,<br><br>Your booking for Freeze-drier is confirmed. Time slot: $startdate $starttime to $enddate $endtime.<br><br>You can edit your booking by clicking <a href=\"http://161.64.198.12/GBSCC/freeze_drier_edit.php?id=$id\">this link</a>. If you would like to cancel this booking, please click <a href=\"http://161.64.198.12/GBSCC/freeze_drier_user.php\">this link</a>.<br><br>This is an automated email from <a href=\"http://161.64.198.12/GBSCC/index.php\">Core Database</a>. Please do not reply to this email. For any queries, please contact the Core support team.<br><br>";
+            $main_mesg = "Dear Core User,<br><br>Your booking for Freeze-drier is confirmed. Time slot: $startdate $starttime to $enddate $endtime. Your chamber choice is: $chamber.<br><br>You can edit your booking by clicking <a href=\"http://161.64.198.12/GBSCC/freeze_drier_edit.php?id=$id\">this link</a>. If you would like to cancel this booking, please click <a href=\"http://161.64.198.12/GBSCC/freeze_drier_user.php\">this link</a>.<br><br>This is an automated email from <a href=\"http://161.64.198.12/GBSCC/index.php\">Core Database</a>. Please do not reply to this email. For any queries, please contact the Core support team.<br><br>";
 
             $main_mesg .= $main_mesg_email;
 
