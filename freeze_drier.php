@@ -66,7 +66,7 @@
             display: none;
         }
 
-        .introduction .note {
+        div .note {
             color: red;
             font-size: 18px;
         }
@@ -77,21 +77,7 @@
 <?php session_start(); ?>
 <?php require('login.php'); ?>
 
-<div class="introduction">
-    <h6>Introduction of Freeze-drier</h6>
-    <br>
-    <p>The freeze dryer technology is a water removal procedure used to preserve perishable materials, with an aim to increase the material’s shelf life and/or prepare them for transport. Freeze drying is the process of freezing the materials, then decreasing the pressure and adding heat to transform frozen water in the material to change into a vapor (sublimate).
-    </p>
-    <br>
-    <br>
-    <p><strong>The freeze drier available for users at the core is Labconco FreeZone 4.5 L 105C Benchtop Freeze Dryer.</strong></p>
-    <br>
-    <br>
-    <p>This instrument is designed for lyophilizing light to moderate sample loads. It’s stainless steel collector coil holds 4.5 liters of ice before defrosting. Free of HCFCs(hydrofluorocarbons)/CFCs(chlorofluorocarbons) and consists of two 1/2 horsepower refrigeration systems that cools the collector to -105° C (-157° F) at 60Hz or -102° C (-152° F) at 50 Hz, fit for low eutectic point samples such as ethanol and acetonitrile.
-    </p>
-    <br>
-    <br>
-    <br>
+<div>
     <h6>Freeze-drier Booking</h6>
     <br>
     <p class="note"><b>Please check the availability calendar before making a reservation.</b></p>
@@ -122,15 +108,21 @@
 
     <br>
     <form name="freezedrier" action="freeze_drier_add_mysql.php#top" method="get">
-        <p style="color:red"><strong>Metal adapter is required. Please select your chamber set:</strong></p>
+        <p style="color:red"><strong>Please note that the Metal adapter will be provided alongside any Chamber set selected. Please select your chamber set:</strong></p>
         <br>
         <input type="radio" id="NoNeed" name="chamber" value="NoNeed" checked><label for="NoNeed">No chamber required</label>
         <br>
         <input type="radio" id="SetA" name="chamber" value="SetA"><label for="SetA">Set A (300ml flask with flask top)</label>
         <br>
+        <img src="./layout/freezedrier_SetA.jpg" alt="freeze-drier SetA" title="freeze-drier SetA" height="150" width="150">
+        <br>
         <input type="radio" id="SetB" name="chamber" value="SetB"><label for="SetB">Set B (900ml flask with flask top)</label>
         <br>
+        <img src="./layout/freezedrier_SetB.jpg" alt="freeze-drier SetB" title="freeze-drier SetB" height="150" width="150">
+        <br>
         <input type="radio" id="SetC" name="chamber" value="SetC"><label for="SetC">Set C (900ml flask with the 5-10ml tube holder and flask top)</label>
+        <br>
+        <img src="./layout/freezedrier_SetC.jpg" alt="freeze-drier SetC" title="freeze-drier SetC" height="150" width="150">
         <br>
         <p style="color:red"><b>Please select your time slot:</b>
         </p>
