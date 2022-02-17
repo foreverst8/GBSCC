@@ -75,6 +75,7 @@
 							<li><a href="qiacube.php" target="myiframe" style="width:210px">QIAcube</a></li>
 							<li><a href="sanger_sample_preparation.php" target="myiframe" style="width:210px">Sanger</a></li>
 							<li><a href="microarray_sample_preparation.php" target="myiframe" style="width:210px">Microarray</a></li>
+							<li><a href="freezedrier_introduction.php" target="myiframe" style="width:210px">Freeze-drier</a></li>
 						</ul>
 					</li>
 					<li><a class="drop" href="#">Help</a>
