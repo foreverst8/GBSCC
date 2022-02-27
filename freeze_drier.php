@@ -78,7 +78,7 @@
 <?php require('login.php'); ?>
 
 <div>
-    <h6>Freeze-drier Booking</h6>
+    <h6>Labconco Freeze Dryer (FreeZone 4.5 L 105C Benchtop) Booking</h6>
     <br>
     <p class="note"><b>Please check the availability calendar before making a reservation.</b></p>
     <br>
@@ -108,7 +108,12 @@
 
     <br>
     <form name="freezedrier" action="freeze_drier_add_mysql.php#top" method="get">
-        <p style="color:red"><strong>Please note that the Metal adapter will be provided alongside any Chamber set selected. Please select your chamber set:</strong></p>
+        <p style="color:red"><strong>Please note that the Metal adapter will be provided alongside any Chamber set selected.</strong></p>
+        <br>
+        <img src="./layout/metal_adapter.jpg" alt="metal adapter" title="metal adapter" height="150" width="150">
+        <br>
+        <br>
+        <p style="color:red"><strong>Please select your chamber set:</strong></p>
         <br>
         <input type="radio" id="NoNeed" name="chamber" value="NoNeed" checked><label for="NoNeed">No chamber required</label>
         <br>
