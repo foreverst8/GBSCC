@@ -70,12 +70,12 @@
 							<li><a href="Chromium_10x_Genomics_sample_preparation.php" target="myiframe" style="width:210px">Chromium 10x Genomics</a></li>
 							<li><a href="cytof_sample_preparation.php" target="myiframe" style="width:210px">CyTOF</a></li>
 							<li><a href="ddpcr.php" target="myiframe" style="width:210px">Droplet Digital PCR</a></li>
+							<li><a href="freezedrier_introduction.php" target="myiframe" style="width:210px">Freeze-drier</a></li>
 							<li><a href="nadia.php" target="myiframe" style="width:210px">NADIA</a></li>
 							<li><a href="ngs_sample_preparation.php" target="myiframe" style="width:210px">NGS</a></li>
 							<li><a href="qiacube.php" target="myiframe" style="width:210px">QIAcube</a></li>
 							<li><a href="sanger_sample_preparation.php" target="myiframe" style="width:210px">Sanger</a></li>
 							<li><a href="microarray_sample_preparation.php" target="myiframe" style="width:210px">Microarray</a></li>
-							<li><a href="freezedrier_introduction.php" target="myiframe" style="width:210px">Freeze-drier</a></li>
 						</ul>
 					</li>
 					<li><a class="drop" href="#">Help</a>
@@ -87,7 +87,6 @@
 					<li><a href="administration.php" target="myiframe">Administration</a></li>
 					<li><a href="contactus.php" target="myiframe">Contact Us</a></li>
 					<li><a href="publication.php" target="myiframe">Publications</a></li>
-					<li><a href="login.php" target="myiframe">Login</a></li>
 				</ul>
 			</nav>
 			<hr>
