@@ -109,6 +109,7 @@ require('login.php');?>
                     if($result_user[0]['main']=='y'){
                         echo "<br>";
                         echo "<li><a style=\"line-height:30px\" href=\"stock_edit.php\">Edit reagent stock</a></li>";
+                        echo "<li><a style=\"line-height:30px\" href=\"reagent_search_result.php\">Manage reagent request</a></li>";
                     }
                     ?>
                 </ul>
