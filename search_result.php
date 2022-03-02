@@ -67,7 +67,7 @@ table, th, td {
 	 
 	 if($_GET['run']){
 		   if($_GET['Keywords']!=""){
-		    	if($result_user[0]['main']==y){
+		    	if($result_user[0]['main']=='y'){
 					$search_result=search("select * from sangerseq_record where run='".$_GET['run']."' and (Sample_name like '%$keywords%' or DNA_type like '%$keywords%' or Primer_type like '%$keywords%' or Submitter like '%$keywords%' or Date like '%$keywords%' or Lab like '%$keywords%' or Email like '%$keywords%')");
 					$search_run_result=search("select distinct(run) from sangerseq_record where Sample_name like '%$keywords%' or DNA_type like '%$keywords%' or Primer_type like '%$keywords%' or Submitter like '%$keywords%' or Date like '%$keywords%' or Lab like '%$keywords%' or Email like '%$keywords%'");
 				}
@@ -78,7 +78,7 @@ table, th, td {
 			
 			}
 			else{
-				if($result_user[0]['main']==y){
+				if($result_user[0]['main']=='y'){
 					$search_result=search("select * from sangerseq_record where run='".$_GET['run']."'");
 					$search_run_result=search("select distinct(run) from sangerseq_record");
 				}
@@ -92,7 +92,7 @@ table, th, td {
 	 
 	 if($_GET['Keywords']!=""){
 			 
-			if($result_user[0]['main']==y){
+			if($result_user[0]['main']=='y'){
 				
 				$search_result=search("select * from sangerseq_record where run like '%$keywords%' or Sample_name like '%$keywords%' or DNA_type like '%$keywords%' or Primer_type like '%$keywords%' or Submitter like '%$keywords%' or Date like '%$keywords%' or Lab like '%$keywords%' or Email like '%$keywords%'");
 				$search_run_result=search("select distinct(run) from sangerseq_record where run like '%$keywords%' or Sample_name like '%$keywords%' or DNA_type like '%$keywords%' or Primer_type like '%$keywords%' or Submitter like '%$keywords%' or Date like '%$keywords%' or Lab like '%$keywords%' or Email like '%$keywords%' ORDER BY run ASC");
@@ -106,7 +106,7 @@ table, th, td {
 	 }
 	 else{
 			$kk=1;
-			if($result_user[0]['main']==y){
+			if($result_user[0]['main']=='y'){
             
 				$search_result=search("select * from sangerseq_record");
 				$search_run_result=search("select distinct(run) from sangerseq_record  ORDER BY seq_id");
@@ -146,13 +146,13 @@ table, th, td {
 				echo "<p><b>Selected Run: </b></p>";
 				echo $_GET['Keywords'].$_GET['run']."<br><br>";
 				
-				if(($_GET['run'] or $kk==1) and ($result_user[0]['main']==y)){
+				if(($_GET['run'] or $kk==1) and ($result_user[0]['main']=='y')){
 					echo "<a class=\"button\" href=\"export_txt_file.php?run=".$_GET['run']."\">Export .TXT File</a><br><br>";
 				}
 				
 				echo "<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" bordercolor=\"#999999\" >";
 				echo "<tr align=\"center\">";
-				if($result_user[0]['main']==y){
+				if($result_user[0]['main']=='y'){
 					echo "<td rowspan=\"2\" width=\"10px\">&nbsp;</td>";
 				}
 				echo "<td rowspan=\"2\" width=\"100px\">Run</td>";
@@ -179,7 +179,7 @@ table, th, td {
 					}
 					echo "<tr align=\"center\">";
 					
-					if($result_user[0]['main']==y){
+					if($result_user[0]['main']=='y'){
 						echo "<td width=\"10\"><a class=\"button\" href=\"edit_record.php?tmp_id=".$search_result[$i]['tmp_id']."&run=".$search_result[$i]['run']."\">>></a></td>";
 					}
 					for($ii=0;$ii<$col;$ii++){
