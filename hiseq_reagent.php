@@ -1984,6 +1984,7 @@
 
 				$Subject = "FYI: Reagent request of " . $_SESSION['username'] . " from " . $result_user[0]['lab'] . "  ($RgRID).";
 				$CC_arr = explode(',', $CC);
+				// $CC_arr = explode(',', $test_email);
 
 				if ($tomail != "") {
 
