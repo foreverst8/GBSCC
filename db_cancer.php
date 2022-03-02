@@ -1,56 +1,70 @@
 <?php 
+require('email_CC.php');
+require './PHPMailer-master/PHPMailerAutoload.php';
 
-function db_connect(){
-		$result=new mysqli('localhost','root','fhs12345','genomics_core');
-		echo $result->connect_error;
-		if(!$result){
-				
-				printf("Connect failed: %s\n", mysqli_connect_error());
-				throw new Exception('Could not connect to databaset server.');
-		}
-		else{		
-			return $result;
-		}
-			
+function db_connect()
+{
+    $server = "localhost";
+    $username = "root";
+    $password = "fhs12345";
+    $database = "genomics_core";
+    $conn = new mysqli($server, $username, $password, $database);
+    if ($conn->connect_error) 
+    {
+        die("Connected failed: " . $conn->connect_error);
+    } 
+    else {
+        return $conn;
+        // echo "success";
+    }
 }
 
-function search($q){
-	   $mysqli2 = db_connect();
-		if ($stmt2 = $mysqli2->prepare($q)) { 
-		
-			
-			#$stmt2->bind_param("s", $biobank_id); 
-			$stmt2->execute(); 
-		
-			$meta2 = $stmt2->result_metadata(); 
-			while ($field2 = $meta2->fetch_field()) 
-			{ 
-				$params2[] = &$row2[$field2->name]; 
-			} 
-		
-			call_user_func_array(array($stmt2, 'bind_result'), $params2); 
-		
-			while ($stmt2->fetch()) { 
-				foreach($row2 as $key => $val) 
-				{ 
-					$c2[$key] = $val; 
-				} 
-				$result2[] = $c2; 
-			} 
-			
-			$stmt2->close(); 
-		} 
-		else{
-			echo "ERROR:7<br>";
-			
-		
-		}
-		$mysqli2->close(); 
-		return @$result2;
-	 }
-function exitout(){
-	/*			echo "<a href=\"index.php\">Home Page.</a>";
-				echo "</td></tr></table>";
-				require('footer.php');*/
-	}
-?>
+function search($query)
+{
+    $conn = db_connect();
+    $result = mysqli_query($conn, $query);
+    $arr = array();
+    if (mysqli_num_rows($result)>0) 
+    {
+        while ($row = mysqli_fetch_assoc($result)) 
+        {
+            $arr[] = $row; 
+        }
+    }
+    else 
+    {
+        echo "ERROR: No record found in the database by '$query'<br>";
+    }
+    mysqli_close($conn);
+    return $arr;
+}
+
+function send_mail($username, $address, $CC, $Subject, $main_mesg) 
+{
+    if ($username != '')
+    {
+        $mail = new PHPMailer;
+        $mail->CharSet    = "UTF-8";
+        $mail->IsSMTP();
+        $mail->SMTPAuth   = true;
+        $mail->SMTPSecure = "ssl";
+        $mail->Host       = "smtp.gmail.com";
+        $mail->Port       = 465;
+        $mail->Username   = "fhs.genomics.core@gmail.com";
+        $mail->Password   = "genomicscore";
+        $mail->SetFrom('fhs.genomics.core@gmail.com', 'fhs.genomics.core');
+        $mail->Subject    = $Subject;
+        $mail->MsgHTML($main_mesg);
+    }
+    for ($i = 0; $i < count($address); $i++) {
+        $mail->AddAddress($address[$i]);
+    }
+    for ($i = 0; $i < count($CC); $i++) {
+        $mail->AddCC($CC[$i]);
+    }
+    if (!$mail->Send()) {
+        echo "Request email failed. Please contact Genomics Core Tech support.<br><br>" . $mail->ErrorInfo;
+    } else {
+        echo "<p>Request email send to: $address<br><br>Request email CC: $CC<br><br></p>";
+    }
+}
