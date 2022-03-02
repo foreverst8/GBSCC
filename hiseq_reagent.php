@@ -54,6 +54,7 @@
 	<br>
 
 	<?php
+	db_connect();
 	$result_price = search("select * from price_table");
 	$result_price_array = array();
 
@@ -165,7 +166,6 @@
 			var vd16 = document.getElementById("NEB_Index_fullset").value;
 			var vd17 = document.getElementById("NEB_Index_2_fullset").value;
 			var vd18 = document.getElementById("Q5_HighFidelity_DNA_Polymerase").value;
-
 
 			var pv1 = <?php echo $result_price_array["DNA_High_sensitivty_chip"] ?>;
 			var pv2 = <?php echo $result_price_array["RNA_Nano"] ?>;
@@ -1437,6 +1437,7 @@
 		echo "<p style='color:#002A60'><b>Total Expenditure</b></p>";
 		echo "</td>";
 		echo "</tr>";
+
 		echo "<tr>";
 		echo "<td align=\"center\" height=\"40px\" valign=\"middle\">";
 		echo "<textarea name=\"remark\" rows=\"3\" style=\"width:500px\"></textarea>";
@@ -1446,36 +1447,38 @@
 		echo "</td>";
 		echo "</tr>";
 		echo "</table><br><br>";
+
+
 		echo "<button class=\"test\" id=\"demo\" onclick=\"javascript:{this.disabled=true;document.reagent.submit();document.getElementById('demo').innerHTML='Waiting...';}\">Submit</button>";
 
 		echo "</form>";
 
 		echo "<br><p style=\"color:#002A60;font-size:12px;line-height:30px\">*Submission may take a few seconds, please do not click away from this page and wait for a response after clicking the submit button.</p><br>";
 	} else {
-		$Friday = date("ymd", strtotime("Friday"));
-		$Tuesday = date("ymd", strtotime("Tuesday"));
 		ini_set("date.timezone", "Asia/Shanghai");
-
-		$collect_date = "";
-		$collect_date_detail = "";
-
-		if ($Friday > $Tuesday) {
-			if (date("ymd", strtotime("Tuesday")) == date("ymd")) {
-				$collect_date = "Friday";
-				$collect_date_detail = date("d/m/Y", strtotime("Friday"));
-			} else {
-				$collect_date = "Tuesday";
-				$collect_date_detail = date("d/m/Y", strtotime("Tuesday"));
-			}
-		} else {
-			if (date("ymd", strtotime("Friday")) == date("ymd")) {
-				$collect_date = "Tuesday";
-				$collect_date_detail = date("d/m/Y", strtotime("Tuesday"));
-			} else {
-				$collect_date = "Friday";
-				$collect_date_detail = date("d/m/Y", strtotime("Friday"));
-			}
+		$Monday = date("Y-m-d H:i:s", mktime(15, 30, 0, date("m"), date("d") - date("w") + 1, date("Y")));
+		$Wednesday = date("Y-m-d H:i:s", mktime(12, 0, 0, date("m"), date("d") - date("w") + 3, date("Y")));
+		$Friday = date("Y-m-d H:i:s", mktime(12, 0, 0, date("m"), date("d") - date("w") + 5, date("Y")));
+		$now =  date('Y-m-d H:i:s', time());
+		
+		if ($now < $Monday) 
+		{
+			$collect_date = "Monday";
+			$collect_date_detail = date("d/m/Y", mktime(0, 0, 0, date("m"), date("d") - date("w") + 1, date("Y")));
 		}
+		elseif ($now >= $Monday and $now < $Wednesday) 
+		{
+			$collect_date = "Wednesday";
+			$collect_date_detail = date("d/m/Y", mktime(0, 0, 0, date("m"), date("d") - date("w") + 3, date("Y")));
+		}
+		elseif ($now >= $Wednesday and $now < $Friday) {
+			$collect_date = "Friday";
+			$collect_date_detail = date("d/m/Y", mktime(0, 0, 0, date("m"), date("d") - date("w") + 5, date("Y")));
+		}
+		elseif ($now >= $Friday) {
+			$collect_date = "Monday";
+			$collect_date_detail = date("d/m/Y", strtotime("next Monday"));
+		};
 
 		$Submitter_Name = $_GET['Submitter_Name'];
 		$Sample_Name = $_GET['Sample_Name'];
@@ -1545,8 +1548,6 @@
 		$Remark = htmlspecialchars($Remark, ENT_QUOTES);
 
 
-
-
 		$result_tmp = search("select max(reagent_id) from genomics_core.reagent");
 
 		if ($result_tmp[0]['max(reagent_id)'] == "") {
@@ -1556,12 +1557,15 @@
 		$RgRID = "RgRID" . ($result_tmp[0]['max(reagent_id)'] + 1);
 
 		/*CHANGE BELOW*/
-
+		// $PI_approval = 'Yes';
+		// $distributed = 'No';
 		$value = "'" . ($result_tmp[0]['max(reagent_id)'] + 1) . "','$RgRID','$DNA_High_sensitivty_chip','$RNA_Nano','$NEBNEXT_PloyA','$NEBNEXT_Ultra_set1','$NEBNEXT_Ultra_set2','$NEBNEXT_Ultra_II_set1','$NEBNEXT_Ultra_II_set2','$NEBNEXT_Ultra_noIndex','$NEBNEXT_Ultra_II_noIndex', '$NEB_Index','$NEB_Index_2', '$NEB_Quickligation', '$NEBNEXT_Ultra_II_96', '$NEBNEXT_Ultra_II_EndRepair', '$Taq_DNA_Ligase', '$Phusion_DNA_Pol', '$Primestar_DNA_Pol', '$Qubit_dsDNA_HS', '$Aline_PCR', '$Aline_PCR_bottle', '$Aline_Size','$Aline_Size_selector_1_beads_bottle','$Rnaseh','$Spinminiprep','$QIAGEN_RNeasy_Mini','$QIAGEN_QIAquick_PCR_Purification','$QIAGEN_QIAquick_Gel_Extraction','$SYBR_gelstain','$Agencourt_AMPure_XP','$ChemGenes_Barcoded_beads','$EQ_Four_Element_Calibration_Beads','$Maxpar_Antibody_Labeling_Kit','$Cell_ID_Intercalator_Ir','$Cell_ID_Cisplatin','$Maxpar_Human_PB_Basic_Phenotyping_Panel_Kit','$Centrifugal_Filter_Unit_3kDa','$Centrifugal_Filter_Unit_50kDa','$Maxpar_Cell_Staining_Buffer','$Eppendorf_8Tube_Strips_with_Caps','$Rainin_Wide_orifice_pipette_tips','$NEB_Index_fullset','$NEB_Index_2_fullset','$Q5_HighFidelity_DNA_Polymerase','$total_cost','" . $_SESSION['username'] . "','" . $result_user[0]['email'] . "','" . $result_user[0]['lab'] . "','$date','$Remark'";
+		// '$PI_approval','$distributed',
 
 		/*CHANGE BELOW*/
 
-		$name = "reagent_id,RgRID,DNA_High_sensitivty_chip,RNA_Nano,NEBNEXT_PloyA,NEBNEXT_Ultra_set1,NEBNEXT_Ultra_set2,NEBNEXT_Ultra_II_set1,NEBNEXT_Ultra_II_set2,NEBNEXT_Ultra_noIndex,NEBNEXT_Ultra_II_noIndex,NEB_Index,NEB_Index_2,NEB_Quickligation,NEBNEXT_Ultra_II_96,NEBNEXT_Ultra_II_EndRepair,Taq_DNA_Ligase,Phusion_DNA_Pol,Primestar_DNA_Pol,Qubit_dsDNA_HS,Aline_PCR,Aline_PCR_bottle,Aline_Size,Aline_Size_selector_1_beads_bottle,Rnaseh,Spinminiprep,QIAGEN_RNeasy_Mini,QIAGEN_QIAquick_PCR_Purification,QIAGEN_QIAquick_Gel_Extraction,SYBR_gelstain,Agencourt_AMPure_XP,ChemGenes_Barcoded_beads,EQ_Four_Element_Calibration_Beads,Maxpar_Antibody_Labeling_Kit,Cell_ID_Intercalator_Ir,Cell_ID_Cisplatin,Maxpar_Human_PB_Basic_Phenotyping_Panel_Kit,Centrifugal_Filter_Unit_3kDa,Centrifugal_Filter_Unit_50kDa,Maxpar_Cell_Staining_Buffer,Eppendorf_8Tube_Strips_with_Caps,Rainin_Wide_orifice_pipette_tips,NEB_Index_fullset,NEB_Index_2_fullset,Q5_HighFidelity_DNA_Polymerase,total_cost,Submitter_Name,email,lab,date,remark";
+		$name = "reagent_id,RgRID,DNA_High_sensitivty_chip,RNA_Nano,NEBNEXT_PloyA,NEBNEXT_Ultra_set1,NEBNEXT_Ultra_set2,NEBNEXT_Ultra_noIndex,NEBNEXT_Ultra_II_set1,NEBNEXT_Ultra_II_set2,NEBNEXT_Ultra_II_noIndex,NEB_Index,NEB_Index_2,NEB_Quickligation,NEBNEXT_Ultra_II_96,NEBNEXT_Ultra_II_EndRepair,Taq_DNA_Ligase,Phusion_DNA_Pol,Primestar_DNA_Pol,Qubit_dsDNA_HS,Rnaseh,Aline_PCR,Aline_PCR_bottle,Aline_Size,Aline_Size_selector_1_beads_bottle,QIAGEN_RNeasy_Mini,QIAGEN_QIAquick_PCR_Purification,QIAGEN_QIAquick_Gel_Extraction,Spinminiprep,SYBR_gelstain,Agencourt_AMPure_XP,ChemGenes_Barcoded_beads,EQ_Four_Element_Calibration_Beads,Maxpar_Antibody_Labeling_Kit,Cell_ID_Intercalator_Ir,Cell_ID_Cisplatin,Maxpar_Human_PB_Basic_Phenotyping_Panel_Kit,Centrifugal_Filter_Unit_3kDa,Centrifugal_Filter_Unit_50kDa,Maxpar_Cell_Staining_Buffer,Eppendorf_8Tube_Strips_with_Caps,Rainin_Wide_orifice_pipette_tips,NEB_Index_fullset,NEB_Index_2_fullset,Q5_HighFidelity_DNA_Polymerase,total_cost,Submitter_Name,email,lab,date,remark";
+		// PI_approval,distributed,
 
 		$err_count = 0;
 
@@ -1973,6 +1977,7 @@
 				$result_lab = search("select * from lab where lab_name='" . $result_user[0]['lab'] . "'");
 
 				$tomail = $result_lab[0]['director_email'] . "," . $result_user[0]['email'];
+				// $tomail = "xinzhou@um.edu.mo";
 				require('email_CC.php');
 				$tomail_arr = explode(',', $tomail);
 				$main_mesg = "Dear " . $_SESSION['username'] . " and " . $result_lab[0]['lab_director'] . ",<br><br>Thank you for requesting the following reagents. Your reagent (<a href=\"http://161.64.198.12/GBSCC/reagent_search_result.php?RgRID=&Keywords=$RgRID\">$RgRID</a>) will be ready for collection on $collect_date ($collect_date_detail).<br><br>RgRID: <a href=\"http://161.64.198.12/GBSCC/reagent_search_result.php?RgRID=&Keywords=$RgRID\">$RgRID</a><br>Request summary:<br>" . $request_record . "<br>Please note the Reagent Request ID(<font color=\"red\">RgRID</font>) for reference and find the reagent request information from this link: <a href=\"http://161.64.198.12/GBSCC/reagent_search_result.php?RgRID=&Keywords=$RgRID\">Genomics Core database Reagent Request</a>.<br><br>This is an automated email from <a href=\"http://161.64.198.12/GBSCC/index.php\">Genomics Core database</a>. Please do not reply to this email address. For any queries, please contact the Genomics Core Support team.";

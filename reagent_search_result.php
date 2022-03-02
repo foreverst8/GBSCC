@@ -20,7 +20,8 @@ body {
 <br>
 <?php 
 session_start();
-require('login.php');?> 
+require('login.php');
+?> 
 
 <link rel="stylesheet" type="text/css" href="layout/styles/style.css" />
 <script type="text/javascript" src="jquery.min.js"></script>
@@ -45,7 +46,8 @@ require('login.php');?>
     <td align="left" valign="top">
 	<?PHP
 	$result_user=search("select * from user where user_name='".$_SESSION['username']."'");
-	$result_lab_director=search("select * from lab where lab_director='".$_SESSION['username']."'");
+	$lab = $result_user[0]['lab'];
+	$result_lab_director=search("select * from lab where lab_name='$lab'");
 	#echo "select * from lab where user_name='".$_SESSION['username']."'<br>";
 	if(count($result_user)==0){
 		#echo $result_user[0]['sangerseq'].$result_user[0]['user_name']."--<br>";
@@ -72,6 +74,7 @@ require('login.php');?>
 
 	$disapproval_ID=$_GET['disapproval_ID'];
 	$approval_ID=$_GET['approval_ID'];
+
 	$inform_ID=$_GET['inform_ID'];
 	$inform_lab=$_GET['inform_lab'];
 	$distributed_ID=$_GET['distributed_ID'];
@@ -110,63 +113,110 @@ require('login.php');?>
 			
 		}
 		else{
-			echo "<p><b style=\"color:red\">Request $disapproval_ID has been distributed.<br><br></b></p>";
-			echo "<script>alert('Request $disapproval_ID has been distributed');document.location = 'reagent_search_result.php?keywords=$keywords&RgRID=$RgRID'</script>";
+			// echo "<p><b style=\"color:red\">Request $disapproval_ID has been distributed.<br><br></b></p>";
+			// echo "<script>alert('Request $disapproval_ID has been distributed');document.location = 'reagent_search_result.php?keywords=$keywords&RgRID=$RgRID'</script>";
+
+			$conn = db_connect();
+			$result_search2=search("select * from genomics_core.reagent where RgRID='$distributed_ID'");
+			$result_lab_director2=search("select * from genomics_core.lab where lab_name='".$result_search2[0]['lab']."'");
+
+			$tomail=$result_lab_director2[0]['director_email'].",".$result_search2[0]['email'];
+			#$tomail="niranjan.shirgaonkar@gmail.com";
+			require('email_CC.php');
+			$main_mesg="Dear Core user,<br><br>".$result_search2['0']['Submitter_Name']." from the ".$result_user[0]['lab']." has requested some reagents(<a href=\"http://161.64.198.12/GBSCC/reagent_search_result_detial.php?RgRID=$distributed_ID\">$distributed_ID</a>). <br><b style=\"color:red\">Reagents are ready.</b><br><br>This is an automated email from the <a href=\"http://161.64.198.12/GBSCC/index.php\">Core database</a>. Please do not reply to this email address. For any queries, please contact the Core Support team.";
+	
+			$Subject="FYI: Reagent request is ready for ".$_SESSION['username']." from ".$result_user[0]['lab']."  ($distributed_ID).";
+			
+			$tomail_arr=explode(',',$tomail);
+			$CC_arr=explode(',',$CC);
+			if($tomail!=""){
+				
+				$main_mesg.=$main_mesg_email;
+	
+				$mail = new PHPMailer;
+				$mail->CharSet    ="UTF-8";                
+				$mail->IsSMTP();                       
+				$mail->SMTPAuth   = true;            
+				$mail->SMTPSecure = "ssl";                
+				$mail->Host       = "smtp.gmail.com";      
+				$mail->Port       = 465;                
+				$mail->Username   = "fhs.genomics.core@gmail.com"; 
+				$mail->Password   = "genomicscore";       
+				$mail->SetFrom('fhs.genomics.core@gmail.com', 'fhs.genomics.core');   
+				#$mail->AddReplyTo("miaozhengqiang1987@gmail.com"," ");                                      
+				$mail->Subject    = $Subject;                  
+				#$mail->AltBody    = ""; 
+				$mail->MsgHTML($main_mesg); #                       
+				
+				for($i=0;$i<count($tomail_arr);$i++){
+					$mail->AddAddress($tomail_arr[$i]);
+				}
+				for($i=0;$i<count($CC_arr);$i++){
+					$mail->AddCC($CC_arr[$i]);
+				}
+				
+				//$mail->AddAttachment("images/phpmailer.gif"); // attachment 
+				if(!$mail->Send()) {
+					echo "Email Failed.<br>" . $mail->ErrorInfo;
+				} else {
+					#echo "Email Sent<br><br><br>Sent to: $tomail<br>CC:$CC<br>Record:<br>$request_record<br><br>";
+					echo "<script>alert('Users informed');document.location = 'reagent_search_result.php'</script>";
+				}
+			}
 		}
 	}
 
-	if($inform_ID!=""){
-		$conn = db_connect();
-		$result_lab_director2=search("select * from genomics_core.lab where lab_name='$inform_lab'");
-		$result_search2=search("select * from genomics_core.reagent where RgRID='$inform_ID'");
+
+	// if($inform_ID!=""){
+	// 	$conn = db_connect();
+	// 	$result_lab_director2=search("select * from genomics_core.lab where lab_name='$inform_lab'");
+	// 	$result_search2=search("select * from genomics_core.reagent where RgRID='$inform_ID'");
 		
-		$tomail=$result_lab_director2[0]['director_email'].",".$result_search2[0]['email'];
-		#$tomail="niranjan.shirgaonkar@gmail.com";
-		require('email_CC.php');
-		$main_mesg="Dear Core user,<br><br>".$result_search2['0']['Submitter_Name']." from the ".$result_user[0]['lab']." has requested some reagents(<a href=\"http://161.64.198.12/GBSCC/reagent_search_result_detial.php?RgRID=$inform_ID\">$inform_ID</a>). <br><b style=\"color:red\">Reagents are ready.</b><br><br>This is an automated email from the <a href=\"http://161.64.198.12/GBSCC/index.php\">Core database</a>. Please do not reply to this email address. For any queries, please contact the Core Support team.";
+	// 	$tomail=$result_lab_director2[0]['director_email'].",".$result_search2[0]['email'];
+	// 	#$tomail="niranjan.shirgaonkar@gmail.com";
+	// 	require('email_CC.php');
+	// 	$main_mesg="Dear Core user,<br><br>".$result_search2['0']['Submitter_Name']." from the ".$result_user[0]['lab']." has requested some reagents(<a href=\"http://161.64.198.12/GBSCC/reagent_search_result_detial.php?RgRID=$inform_ID\">$inform_ID</a>). <br><b style=\"color:red\">Reagents are ready.</b><br><br>This is an automated email from the <a href=\"http://161.64.198.12/GBSCC/index.php\">Core database</a>. Please do not reply to this email address. For any queries, please contact the Core Support team.";
 
-		$Subject="FYI: Reagent request is ready for ".$_SESSION['username']." from ".$result_user[0]['lab']."  ($inform_ID).";
+	// 	$Subject="FYI: Reagent request is ready for ".$_SESSION['username']." from ".$result_user[0]['lab']."  ($inform_ID).";
 		
-		$tomail_arr=explode(',',$tomail);
-		$CC_arr=explode(',',$CC);
-		if($tomail!=""){
+	// 	$tomail_arr=explode(',',$tomail);
+	// 	$CC_arr=explode(',',$CC);
+	// 	if($tomail!=""){
 			
-			$main_mesg.=$main_mesg_email;
+	// 		$main_mesg.=$main_mesg_email;
 
+	// 		$mail = new PHPMailer;
+	// 		$mail->CharSet    ="UTF-8";                
+	// 		$mail->IsSMTP();                       
+	// 		$mail->SMTPAuth   = true;            
+	// 		$mail->SMTPSecure = "ssl";                
+	// 		$mail->Host       = "smtp.gmail.com";      
+	// 		$mail->Port       = 465;                
+	// 		$mail->Username   = "fhs.genomics.core@gmail.com"; 
+	// 		$mail->Password   = "genomicscore";       
+	// 		$mail->SetFrom('fhs.genomics.core@gmail.com', 'fhs.genomics.core');   
+	// 		#$mail->AddReplyTo("miaozhengqiang1987@gmail.com"," ");                                      
+	// 		$mail->Subject    = $Subject;                  
+	// 		#$mail->AltBody    = ""; 
+	// 		$mail->MsgHTML($main_mesg); #                       
 			
-			require './PHPMailer-master/PHPMailerAutoload.php';
-			$mail = new PHPMailer;
-			$mail->CharSet    ="UTF-8";                
-			$mail->IsSMTP();                       
-			$mail->SMTPAuth   = true;            
-			$mail->SMTPSecure = "ssl";                
-			$mail->Host       = "smtp.gmail.com";      
-			$mail->Port       = 465;                
-			$mail->Username   = "fhs.genomics.core@gmail.com"; 
-			$mail->Password   = "genomicscore";       
-			$mail->SetFrom('fhs.genomics.core@gmail.com', 'fhs.genomics.core');   
-			#$mail->AddReplyTo("miaozhengqiang1987@gmail.com"," ");                                      
-			$mail->Subject    = $Subject;                  
-			#$mail->AltBody    = ""; 
-			$mail->MsgHTML($main_mesg); #                       
+	// 		for($i=0;$i<count($tomail_arr);$i++){
+	// 			$mail->AddAddress($tomail_arr[$i]);
+	// 		}
+	// 		for($i=0;$i<count($CC_arr);$i++){
+	// 			$mail->AddCC($CC_arr[$i]);
+	// 		}
 			
-			for($i=0;$i<count($tomail_arr);$i++){
-				$mail->AddAddress($tomail_arr[$i]);
-			}
-			for($i=0;$i<count($CC_arr);$i++){
-				$mail->AddCC($CC_arr[$i]);
-			}
-			
-			//$mail->AddAttachment("images/phpmailer.gif"); // attachment 
-			if(!$mail->Send()) {
-				echo "Email Failed.<br>" . $mail->ErrorInfo;
-			} else {
-				#echo "Email Sent<br><br><br>Sent to: $tomail<br>CC:$CC<br>Record:<br>$request_record<br><br>";
-				echo "<script>alert('Users informed');document.location = 'reagent_search_result.php'</script>";
-			}
-		}
+	// 		//$mail->AddAttachment("images/phpmailer.gif"); // attachment 
+	// 		if(!$mail->Send()) {
+	// 			echo "Email Failed.<br>" . $mail->ErrorInfo;
+	// 		} else {
+	// 			#echo "Email Sent<br><br><br>Sent to: $tomail<br>CC:$CC<br>Record:<br>$request_record<br><br>";
+	// 			echo "<script>alert('Users informed');document.location = 'reagent_search_result.php'</script>";
+	// 		}
+	// 	}
 
-	}
+	// }
 	  
 	$query="";
 	
