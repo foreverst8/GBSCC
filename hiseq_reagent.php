@@ -1988,8 +1988,6 @@
 				if ($tomail != "") {
 
 					$main_mesg .= $main_mesg_email;
-
-					require './PHPMailer-master/PHPMailerAutoload.php';
 					$mail = new PHPMailer;
 					$mail->CharSet    = "UTF-8";
 					$mail->IsSMTP();
